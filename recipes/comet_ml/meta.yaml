@@ -1,0 +1,54 @@
+{% set name = "comet-ml" %}
+{% set version = "3.23.0" %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/comet_ml-{{ version }}.tar.gz
+  sha256: 522823d330013693bbd0f7f0817ae6cba50ddd7074a55c0879659fbfa308df8d
+
+build:
+  number: 0
+  skip: true   # [py<36]
+  entry_points:
+    - comet = comet_ml.scripts.comet:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dulwich >=0.20.6  # [py>=30]
+    - nvidia-ml >=7.352.0
+    - python
+    - requests >=2.18.4
+    - requests-toolbelt >=0.8.0
+    - semantic_version >=2.8.0
+    - six
+    - websocket-client >=0.55.0
+    - wrapt >=1.11.2
+    - wurlitzer >=1.0.2
+
+test:
+  imports:
+    - comet_ml
+    - comet_ml.bootstrap
+  commands:
+    - pip check
+    - comet --help
+  requires:
+    - pip
+
+about:
+  home: https://www.comet.ml
+  summary: Supercharging Machine Learning
+  license: TAPR-OHL-1.0
+  license_file: PROPRIETARY
+
+extra:
+  recipe-maintainers:
+    - sugatoray
