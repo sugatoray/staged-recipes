@@ -1,0 +1,48 @@
+{% set name = "d3blocks" %}
+{% set version = "1.0.6" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/d3blocks-{{ version }}.tar.gz
+  sha256: c0d813bf5e99ac583c8d7dc5a66589551856e0bcc723c570923cce76906a31d3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python >=3.6
+    - pip
+  run:
+    - python >=3.6
+    - numpy
+    - pandas
+    - tqdm
+    - colourmap
+    - jinja2
+    - d3graph
+    - d3heatmap
+    - requests
+
+test:
+  imports:
+    - d3blocks
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/d3blocks/d3blocks
+  summary: Python package d3blocks
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - sugatoray
